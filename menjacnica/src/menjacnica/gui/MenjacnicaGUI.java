@@ -47,6 +47,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.LinkedList;
 
 public class MenjacnicaGUI extends JFrame {
 
@@ -254,38 +255,16 @@ public class MenjacnicaGUI extends JFrame {
 	}
 
 	private void sacuvajUFajl() {
-		try {
-			JFileChooser fc = new JFileChooser();
-			int returnVal = fc.showSaveDialog(contentPane);
-
-			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				File file = fc.getSelectedFile();
-
-				sistem.sacuvajUFajl(file.getAbsolutePath());
-			}
-		} catch (Exception e1) {
-			JOptionPane.showMessageDialog(contentPane, e1.getMessage(), "Greska", JOptionPane.ERROR_MESSAGE);
-		}
+		GUIKontroler.sacuvajUFajl();
 	}
 
 	private void ucitajIzFajla() {
-		try {
-			JFileChooser fc = new JFileChooser();
-			int returnVal = fc.showOpenDialog(contentPane);
-
-			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				File file = fc.getSelectedFile();
-				sistem.ucitajIzFajla(file.getAbsolutePath());
-				prikaziSveValute();
-			}
-		} catch (Exception e1) {
-			JOptionPane.showMessageDialog(contentPane, e1.getMessage(), "Greska", JOptionPane.ERROR_MESSAGE);
-		}
+		GUIKontroler.ucitajIzFajla();
 	}
 
 	protected void prikaziSveValute() {
 		MenjacnicaTableModel model = (MenjacnicaTableModel) (table.getModel());
-		model.staviSveValuteUModel(sistem.vratiKursnuListu());
+		model.staviSveValuteUModel(GUIKontroler.vratiSveValute());
 
 	}
 
@@ -295,10 +274,7 @@ public class MenjacnicaGUI extends JFrame {
 
 	private void prikaziIzvrsiZamenuGUI() {
 		if (table.getSelectedRow() != -1) {
-			MenjacnicaTableModel model = (MenjacnicaTableModel) (table.getModel());
-			IzvrsiZamenuGUI prozor = new IzvrsiZamenuGUI(this, model.vratiValutu(table.getSelectedRow()));
-			prozor.setLocationRelativeTo(contentPane);
-			prozor.setVisible(true);
+			GUIKontroler.prikaziIzvrsiZamenu(table.getSelectedRow());
 		}
 	}
 

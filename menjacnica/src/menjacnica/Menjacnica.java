@@ -1,15 +1,10 @@
 package menjacnica;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 
 import sistemskeoperacije.SODodajValutu;
 import sistemskeoperacije.SOIzvrsiTransakciju;
+import sistemskeoperacije.SONapraviValutu;
 import sistemskeoperacije.SOObrisiValutu;
 import sistemskeoperacije.SOSacuvajUFajl;
 import sistemskeoperacije.SOUcitajIzFajla;
@@ -46,6 +41,11 @@ public class Menjacnica implements MenjacnicaInterface {
 	@Override
 	public void sacuvajUFajl(String putanja) {
 		SOSacuvajUFajl.izvrsi(putanja, kursnaLista);
+	}
+	//metoda za pravljenje valute
+	public Valuta napraviValutu(int sifra, String naziv, String skraceniNaziv, double kupovni, double prodajni,
+			double srednji) {
+		return SONapraviValutu.izvrsi(sifra, naziv, skraceniNaziv, kupovni, prodajni, srednji);
 	}
 
 }
