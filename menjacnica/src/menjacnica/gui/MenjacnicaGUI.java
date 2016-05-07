@@ -73,7 +73,8 @@ public class MenjacnicaGUI extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				ugasiAplikaciju();
+				GUIKontroler.ugasiAplikaciju();
+				;
 			}
 		});
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenjacnicaGUI.class.getResource("/icons/Screenshot.png")));
@@ -116,7 +117,7 @@ public class MenjacnicaGUI extends JFrame {
 			btnNewButton = new JButton("Dodaj kurs");
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					prikaziDodajKursGUI();
+					GUIKontroler.prikaziDodajKursGUI();
 				}
 			});
 			btnNewButton.setPreferredSize(new Dimension(140, 25));
@@ -147,7 +148,12 @@ public class MenjacnicaGUI extends JFrame {
 			btnIzvrsiZamenu = new JButton("Izvrsi zamenu");
 			btnIzvrsiZamenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					prikaziIzvrsiZamenuGUI();
+					if (table.getSelectedRow() != -1) {
+						GUIKontroler.prikaziIzvrsiZamenu(table.getSelectedRow());
+					} else {
+						JOptionPane.showMessageDialog(getContentPane(),
+								"Niste odabrali valutu za koju zelite da izvrsite transakciju!");
+					}
 				}
 			});
 			btnIzvrsiZamenu.setPreferredSize(new Dimension(140, 25));
@@ -188,7 +194,7 @@ public class MenjacnicaGUI extends JFrame {
 			mntmNew = new JMenuItem("Open");
 			mntmNew.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					ucitajIzFajla();
+					GUIKontroler.ucitajIzFajla();
 				}
 			});
 			mntmNew.setIcon(new ImageIcon(
@@ -203,7 +209,7 @@ public class MenjacnicaGUI extends JFrame {
 			mntmSave = new JMenuItem("Save");
 			mntmSave.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					sacuvajUFajl();
+					GUIKontroler.sacuvajUFajl();
 				}
 			});
 			mntmSave.setIcon(new ImageIcon(
@@ -218,7 +224,7 @@ public class MenjacnicaGUI extends JFrame {
 			mntmExit = new JMenuItem("Exit");
 			mntmExit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					ugasiAplikaciju();
+					GUIKontroler.ugasiAplikaciju();
 				}
 			});
 			mntmExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.ALT_MASK));
@@ -231,7 +237,7 @@ public class MenjacnicaGUI extends JFrame {
 			mntmAbout = new JMenuItem("About");
 			mntmAbout.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					prikaziAboutProzor();
+					GUIKontroler.prikaziAboutProzor();
 				}
 			});
 		}
@@ -241,41 +247,10 @@ public class MenjacnicaGUI extends JFrame {
 	private static void addPopup(Component component, final JPopupMenu popup) {
 	}
 
-	private void ugasiAplikaciju() {
-		int opcija = JOptionPane.showConfirmDialog(contentPane, "Da li ZAISTA zelite da izadjete iz apliacije",
-				"Izlazak", JOptionPane.YES_NO_OPTION);
-
-		if (opcija == JOptionPane.YES_OPTION)
-			System.exit(0);
-	}
-
-	private void prikaziAboutProzor() {
-		JOptionPane.showMessageDialog(contentPane, "Autor: Bojan Tomic, Verzija 1.0", "O programu Menjacnica",
-				JOptionPane.INFORMATION_MESSAGE);
-	}
-
-	private void sacuvajUFajl() {
-		GUIKontroler.sacuvajUFajl();
-	}
-
-	private void ucitajIzFajla() {
-		GUIKontroler.ucitajIzFajla();
-	}
-
 	protected void prikaziSveValute() {
 		MenjacnicaTableModel model = (MenjacnicaTableModel) (table.getModel());
 		model.staviSveValuteUModel(GUIKontroler.vratiSveValute());
 
-	}
-
-	private void prikaziDodajKursGUI() {
-		GUIKontroler.prikaziDodajKursGUI();
-	}
-
-	private void prikaziIzvrsiZamenuGUI() {
-		if (table.getSelectedRow() != -1) {
-			GUIKontroler.prikaziIzvrsiZamenu(table.getSelectedRow());
-		}
 	}
 
 	private JTable getTable() {

@@ -30,6 +30,19 @@ public class GUIKontroler {
 		});
 	}
 
+	public static void ugasiAplikaciju() {
+		int opcija = JOptionPane.showConfirmDialog(menjacnicaGUI.getContentPane(),
+				"Da li ZAISTA zelite da izadjete iz apliacije?", "Izlazak", JOptionPane.YES_NO_OPTION);
+
+		if (opcija == JOptionPane.YES_OPTION)
+			System.exit(0);
+	}
+
+	public static void prikaziAboutProzor() {
+		JOptionPane.showMessageDialog(menjacnicaGUI.getContentPane(), "Autor: Luka Baljak, Verzija 2.0",
+				"O programu Menjacnica", JOptionPane.INFORMATION_MESSAGE);
+	}
+
 	public static void prikaziDodajKursGUI() {
 		DodajKursGUI prozor = new DodajKursGUI(menjacnicaGUI);
 		prozor.setLocationRelativeTo(menjacnicaGUI.getContentPane());
